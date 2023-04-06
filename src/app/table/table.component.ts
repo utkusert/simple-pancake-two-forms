@@ -13,7 +13,7 @@ import { AppState } from 'src/app/store/app-state-model';
 })
 export class TableComponent implements OnInit {
   form = new FormGroup({
-    payload: new FormControl({
+    formArray: new FormControl({
       content: ["racecar", "A man, a plan, a canal: Panama.", "A test"]
     })
   });
@@ -40,9 +40,6 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const payload: { content: string[] } = this.form.value.payload?.content;
-    this.store.dispatch(postRequest({ payload }));
-    this.subscription = this.getSubscriptions();
   }
   ngOnDestroy(): void {
     this.subscription.forEach(subscription => subscription.unsubscribe())
@@ -50,6 +47,9 @@ export class TableComponent implements OnInit {
 
   sendForm() {
     console.log(this.form.value);
+    const payload: { content: string[] } = { content: this.form.value.formArray?.content as string[] };
+    this.store.dispatch(postRequest({ payload }));
+    this.subscription = this.getSubscriptions();
   }
 
 }
