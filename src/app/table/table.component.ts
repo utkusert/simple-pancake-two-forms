@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ResponseModel } from 'src/app/models/response-model';
@@ -11,6 +12,11 @@ import { AppState } from 'src/app/store/app-state-model';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+  form = new FormGroup({
+    formArray: new FormControl({
+      content: ["racecar", "A man, a plan, a canal: Panama.", "A test"]
+    })
+  });
 
   bothPureAndPalindromeSub: ResponseModel[] = [];
   onlyPalindromeSub: ResponseModel[] = [];
@@ -34,16 +40,16 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const payload = {
-      content: ["racecar",
-        "A man, a plan, a canal: Panama.",
-        "A test"]
-    };
-    this.store.dispatch(postRequest({ payload }));
-    this.subscription = this.getSubscriptions();
   }
   ngOnDestroy(): void {
     this.subscription.forEach(subscription => subscription.unsubscribe())
+  }
+
+  sendForm() {
+    console.log(this.form.value);
+    const payload: { content: string[] } = { content: this.form.value.formArray?.content as string[] };
+    this.store.dispatch(postRequest({ payload }));
+    this.subscription = this.getSubscriptions();
   }
 
 }
