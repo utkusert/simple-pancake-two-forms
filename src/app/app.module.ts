@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { postReducer } from './store/reducer-store';
 import { EffectsModule } from '@ngrx/effects';
 import { PostEffects } from './store/effect-store';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PostEffects } from './store/effect-store';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({ post: postReducer }),
     EffectsModule.forRoot([PostEffects])
   ],
