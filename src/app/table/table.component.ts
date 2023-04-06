@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CvaInputComponent } from './cva-input/cva-input.component';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ResponseModel } from 'src/app/models/response-model';
@@ -12,16 +12,31 @@ import { AppState } from 'src/app/store/app-state-model';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  form = new FormGroup({
-    formArray: new FormControl({
-      content: ["racecar", "A man, a plan, a canal: Panama.", "A test"]
-    })
-  });
+
+  @ViewChild(CvaInputComponent) cvaInputComponent!: CvaInputComponent;
 
   bothPureAndPalindromeSub: ResponseModel[] = [];
   onlyPalindromeSub: ResponseModel[] = [];
   notPalindromeSub: ResponseModel[] = [];
   private subscription: Subscription[] = [];
+
+  constructor(private store: Store<AppState>) {
+  }
+
+  ngOnInit(): void {
+    this.subscription = this.getSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach(subscription => subscription.unsubscribe())
+  }
+
+  sendForm() {
+    console.log(this.cvaInputComponent.form.value);
+    const payload: { content: string[] } = { content: this.cvaInputComponent.form.value.formArray?.content as string[] };
+    this.store.dispatch(postRequest({ payload }));
+  }
+
   private getSubscriptions(): Subscription[] {
     return [
       this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
@@ -34,22 +49,6 @@ export class TableComponent implements OnInit {
         this.notPalindromeSub = data;
       })
     ];
-  }
-
-  constructor(private store: Store<AppState>) {
-  }
-
-  ngOnInit(): void {
-  }
-  ngOnDestroy(): void {
-    this.subscription.forEach(subscription => subscription.unsubscribe())
-  }
-
-  sendForm() {
-    console.log(this.form.value);
-    const payload: { content: string[] } = { content: this.form.value.formArray?.content as string[] };
-    this.store.dispatch(postRequest({ payload }));
-    this.subscription = this.getSubscriptions();
   }
 
 }

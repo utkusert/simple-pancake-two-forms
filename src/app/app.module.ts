@@ -10,11 +10,13 @@ import { postReducer } from './store/reducer-store';
 import { EffectsModule } from '@ngrx/effects';
 import { PostEffects } from './store/effect-store';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CvaInputComponent } from './table/cva-input/cva-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableComponent
+    TableComponent,
+    CvaInputComponent
   ],
   imports: [
     BrowserModule,
