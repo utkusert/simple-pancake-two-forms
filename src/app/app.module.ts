@@ -9,7 +9,11 @@ import { StoreModule } from '@ngrx/store';
 import { postReducer } from './store/reducer-store';
 import { EffectsModule } from '@ngrx/effects';
 import { PostEffects } from './store/effect-store';
+<<<<<<< Updated upstream
 import { ReactiveFormsModule } from '@angular/forms';
+=======
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+>>>>>>> Stashed changes
 import { CvaInputComponent } from './table/cva-input/cva-input.component';
 
 @NgModule({
@@ -21,6 +25,7 @@ import { CvaInputComponent } from './table/cva-input/cva-input.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     StoreModule.forRoot({ post: postReducer }),

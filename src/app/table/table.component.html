@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <div>
     <table class="table">
         <thead>
@@ -30,4 +31,37 @@
 <form [formGroup]="cvaInputComponent.form">
     <app-cva-input formControlName="formArray"></app-cva-input>
     <button (click)="sendForm()">Submit</button>
+=======
+<form [formGroup]="form" (ngSubmit)="sendForm()">
+    <textarea formControlName="formArray"></textarea>
+    <button type="submit">Post</button>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Text</th>
+                    <th>Pure Palindrome ?</th>
+                    <th>Palindrome ?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let a of bothPureAndPalindromeSub" class="pure-palindrome">
+                    <td>{{a.text}}</td>
+                    <td>{{a.is_pure_palindrome}}</td>
+                    <td>{{a.is_palindrome}}</td>
+                </tr>
+                <tr *ngFor="let a of onlyPalindromeSub " class="only-palindrome">
+                    <td>{{a.text}}</td>
+                    <td>{{a.is_pure_palindrome}}</td>
+                    <td>{{a.is_palindrome}}</td>
+                </tr>
+                <tr *ngFor="let a of notPalindromeSub ">
+                    <td>{{a.text}}</td>
+                    <td>{{a.is_pure_palindrome}}</td>
+                    <td>{{a.is_palindrome}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+>>>>>>> Stashed changes
 </form>

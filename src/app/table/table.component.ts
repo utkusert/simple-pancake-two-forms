@@ -12,8 +12,14 @@ import { AppState } from 'src/app/store/app-state-model';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+<<<<<<< Updated upstream
 
   @ViewChild(CvaInputComponent) cvaInputComponent!: CvaInputComponent;
+=======
+  form = new FormGroup({
+    formArray: new FormControl('')
+  });
+>>>>>>> Stashed changes
 
   bothPureAndPalindromeSub: ResponseModel[] = [];
   onlyPalindromeSub: ResponseModel[] = [];
@@ -51,4 +57,26 @@ export class TableComponent implements OnInit {
     ];
   }
 
+<<<<<<< Updated upstream
+=======
+  constructor(private store: Store<AppState>) {
+  }
+
+  ngOnInit(): void {
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach(subscription => subscription.unsubscribe())
+  }
+
+  sendForm() {
+    console.log(this.form.value.formArray)
+    const payload: { content: string[] } = {
+      content: Array.isArray(this.form.value.formArray)
+        ? this.form.value.formArray
+        : this.form.value.formArray ? [this.form.value.formArray] : []
+    };
+    this.store.dispatch(postRequest({ payload }));
+    this.subscription = this.getSubscriptions();
+  }
+>>>>>>> Stashed changes
 }
