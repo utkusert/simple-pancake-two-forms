@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="sendForm()">
-    <textarea formControlName="formArray"></textarea>
-    <button type="submit">Post</button>
+    <app-cva-input formControlName="formArray"></app-cva-input>
+    <button type="submit" class="btn btn-primary btn-sm">Send Your String</button>
     <div>
         <table class="table">
             <thead>

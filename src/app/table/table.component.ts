@@ -45,7 +45,7 @@ export class TableComponent implements OnInit {
   }
 
   sendForm() {
-    console.log(this.form.value.formArray)
+    console.log(this.form.value)
     const payload: { content: string[] } = {
       content: Array.isArray(this.form.value.formArray)
         ? this.form.value.formArray
