@@ -1,4 +1,12 @@
 <div class="input-group mb-3 mt-3">
-    <input [(ngModel)]="value" type="text" class="form-control" placeholder="Please enter string!"
+    <input [(ngModel)]="newValue" type="text" class="form-control" placeholder="Please enter string!"
         aria-label="Please enter string!" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+        <button class="btn btn-success" type="button" (click)="addValue()">+</button>
+    </div>
+</div>
+
+<div class="list-group">
+    <button *ngFor="let value of values" type="button" class="list-group-item list-group-item-action">
+        {{value}} <button class="btn btn-danger" type="button" (click)="removeValue(value)">-</button></button>
 </div>

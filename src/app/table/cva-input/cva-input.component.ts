@@ -19,17 +19,39 @@ export class CvaInputComponent implements ControlValueAccessor {
 
   onChange: any = () => { }
   onTouch: any = () => { }
-  val: string = ""
+  values: string[] = []
+  newValue: string = ''
 
   set value(val: string) {
-    if (val !== undefined && this.val !== val) {
-      this.val = val
-      this.onChange(val)
-      this.onTouch(val)
+    if (val !== undefined && !this.values.includes(val)) {
+      this.values.push(val)
+      this.onChange(this.values)
+      this.onTouch(this.values)
     }
   }
-  writeValue(value: any) {
-    this.value = value
+
+  removeValue(val: string) {
+    const index = this.values.indexOf(val)
+    if (index !== -1) {
+      this.values.splice(index, 1)
+      this.onChange(this.values)
+      this.onTouch(this.values)
+    }
+  }
+
+  addValue() {
+    if (this.newValue.trim() !== '') {
+      this.value = this.newValue.trim()
+      this.newValue = ''
+    }
+  }
+
+  writeValue(values: any) {
+    if (values && Array.isArray(values)) {
+      this.values = values
+    } else {
+      this.values = []
+    }
   }
 
   registerOnChange(fn: any) {
@@ -40,3 +62,4 @@ export class CvaInputComponent implements ControlValueAccessor {
     this.onTouch = fn
   }
 }
+
