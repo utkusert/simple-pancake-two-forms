@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { ResponseModel } from 'src/app/models/response-model';
 import { postRequest } from 'src/app/store/action-store';
 import { AppState } from 'src/app/store/app-state-model';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -12,16 +12,24 @@ import { AppState } from 'src/app/store/app-state-model';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+
   form = new FormGroup({
-    formArray: new FormControl({
-      content: ["racecar", "A man, a plan, a canal: Panama.", "A test"]
-    })
+    formArray: new FormControl('')
   });
+
+  constructor(private store: Store<AppState>) {
+  }
+  ngOnInit(): void {
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach(subscription => subscription.unsubscribe())
+  }
 
   bothPureAndPalindromeSub: ResponseModel[] = [];
   onlyPalindromeSub: ResponseModel[] = [];
   notPalindromeSub: ResponseModel[] = [];
   private subscription: Subscription[] = [];
+
   private getSubscriptions(): Subscription[] {
     return [
       this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
@@ -36,20 +44,14 @@ export class TableComponent implements OnInit {
     ];
   }
 
-  constructor(private store: Store<AppState>) {
-  }
-
-  ngOnInit(): void {
-  }
-  ngOnDestroy(): void {
-    this.subscription.forEach(subscription => subscription.unsubscribe())
-  }
-
   sendForm() {
-    console.log(this.form.value);
-    const payload: { content: string[] } = { content: this.form.value.formArray?.content as string[] };
+    console.log(this.form.value)
+    const payload: { content: string[] } = {
+      content: Array.isArray(this.form.value.formArray)
+        ? this.form.value.formArray
+        : this.form.value.formArray ? [this.form.value.formArray] : []
+    };
     this.store.dispatch(postRequest({ payload }));
     this.subscription = this.getSubscriptions();
   }
-
 }

@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="input-group mb-3 mt-3">
+            <input [(ngModel)]="newValue" type="text" class="form-control" placeholder="Please enter string!"
+                aria-label="Please enter string!" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button" (click)="addValue()">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="list-group">
+        <button *ngFor="let value of values" type="button"
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            {{value}}
+            <button class="btn btn-danger" type="button" (click)="removeValue(value)">-</button>
+        </button>
+    </div>
+</div>
